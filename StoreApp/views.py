@@ -1,18 +1,40 @@
 from django.shortcuts import render
-from StoreApp.models import Departamento
+from StoreApp.models import Departamento, Produto
 
 # Create your views here.
 def index(request):
-    departamentos = Departamento.objects.all()
+    produtos_destaque = Produto.objects.filter(destaque = True)
 
     context = {
-        'departamentos' : departamentos
+        'produtos' : produtos_destaque
     }
     return render(request, 'index.html', context)
 
 def produto_lista(request):
-    return render(request, 'produtos.html')
+    produtos_listas = Produto.objects.all()
 
-def produto_detalhe(request):
-    return render(request, 'produto_detalhes.html')
+    context = {
+        'produtos' : produtos_listas,
+        'titulo' : 'Todos Produtos'
+    }
+    return render(request, 'produtos.html', context)
+
+def produto_lista_por_departamento(request, id):
+    produto_lista = Produto.objects.filter(departamento_id = id)
+    departamento = Departamento.objects.get(id = id)
+
+    context = {
+        'produto' : produto_lista,
+        'titulo' : departamento.nome
+    }
+    return render(request, 'produtos.html', context)
+
+def produto_detalhe(request, id):
+    produto = Produto.objects.get(id = id)
+
+    context = {
+            'produto' : produto
+    }
+
+    return render(request, 'produto_detalhes.html', context)
 

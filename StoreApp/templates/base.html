@@ -31,7 +31,7 @@
                                 <li><a class="dropdown-item" href="{% url 'produto_lista' %}">Todos Produtos</a></li>
                                 <li><hr class="dropdown-divider" /></li>
                             {% for departamento in departamentos %}
-                                <li><a class="dropdown-item" href="#!">{{ departamento.nome }}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'produto_lista_por_departamento' id=departamento.id %}">{{ departamento.nome }}</a></li>
                             {% endfor %}
                             
                             </ul>
